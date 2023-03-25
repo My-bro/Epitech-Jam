@@ -40,7 +40,11 @@ int main(int argc, char **argv)
     sprite_window.setTexture(texture_background);
     sprite_window.setPosition(0, 0);
     sf::Vector2u windowSize = window.getSize();
-    sprite_window.setScale((windowSize.x + 0.25) - windowSize.x, (windowSize.y + 0.27) - windowSize.y);
+    sf::Vector2u textureSize = texture_background.getSize();
+    float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
+    float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
+    float scale = std::min(scaleX, scaleY);
+    sprite_window.setScale(scale, scale);
     sf::CircleShape shape(50.f);
     shape.setFillColor(sf::Color(0, 0, 0));
     while (window.isOpen()) {
@@ -51,9 +55,7 @@ int main(int argc, char **argv)
             if (event.type == sf::Event::Closed)
                 window.close();
             move(event, &window, &shape);
-            
         }
-        //window.display();
         window.draw(sprite_window);
         window.draw(shape);
         window.display();
