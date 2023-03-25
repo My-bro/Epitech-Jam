@@ -7,18 +7,18 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 void move(sf::Event event, sf::RenderWindow *window, sf::CircleShape *circle, sf::Vector2f *pos_cam)
 {
     int lim_camx = 1332;
     float velocity = 0.4;
-    std::cout <<pos_cam->y<<'\n'<<std::endl;
+    //std::cout <<pos_cam->y<<'\n'<<std::endl;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         circle->setPosition(sf::Vector2f(circle->getPosition().x, circle->getPosition().y - velocity));
         if (circle->getPosition().y < 1465) {
             pos_cam->y -= velocity;
         }
-
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
         circle->setPosition(sf::Vector2f(circle->getPosition().x, circle->getPosition().y + velocity));
@@ -51,11 +51,6 @@ void move(sf::Event event, sf::RenderWindow *window, sf::CircleShape *circle, sf
     if (pos_cam->y > 1364) {
         pos_cam->y = 1364;
     }
-
-    //if (circle->getPosition().x > 40) {
-    //    pos_cam->x += velocity;
-    //}
-
     if (circle->getPosition().x <= 0) {
         circle->setPosition(sf::Vector2f(0, circle->getPosition().y));
     }
@@ -76,6 +71,11 @@ int main(int argc, char **argv)
     sf::Sprite sprite_window;
     sf::Texture texture_background;
 
+    sf::Music music;
+    music.openFromFile("src/musique/musique.ogg");
+    music.play();
+    music.setVolume(50);
+    music.setLoop(true);
     texture_background.loadFromFile("src/sprite/Backgroud/map_final.png");
     sprite_window.setTexture(texture_background);
     sprite_window.setPosition(0, 0);

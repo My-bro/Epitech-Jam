@@ -11,7 +11,7 @@ NAME = prog
 
 CXX = g++
 
-CXXFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+CXXFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 all: $(NAME)
 
