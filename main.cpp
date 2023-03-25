@@ -36,10 +36,11 @@ int main(int argc, char **argv)
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Simple Window");
     sf::Sprite sprite_window;
     sf::Texture texture_background;
-    texture_background.loadFromFile("map_final.png");
+    texture_background.loadFromFile("src/sprite/backgroud/map_final.png");
     sprite_window.setTexture(texture_background);
     sprite_window.setPosition(0, 0);
-    sprite_window.setScale(0.18,0.1757);
+    sf::Vector2u windowSize = window.getSize();
+    sprite_window.setScale((windowSize.x + 0.25) - windowSize.x, (windowSize.y + 0.27) - windowSize.y);
     sf::CircleShape shape(50.f);
     shape.setFillColor(sf::Color(0, 0, 0));
     while (window.isOpen()) {
