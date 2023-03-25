@@ -10,18 +10,17 @@
 
 void move(sf::Event event, sf::RenderWindow *window, sf::CircleShape *circle)
 {
-    int velocity = 10;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        circle->setPosition(sf::Vector2f(circle->getPosition().x, circle->getPosition().y - velocity));
+        circle->setPosition(sf::Vector2f(circle->getPosition().x, circle->getPosition().y - 5));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-        circle->setPosition(sf::Vector2f(circle->getPosition().x, circle->getPosition().y + velocity));
+        circle->setPosition(sf::Vector2f(circle->getPosition().x, circle->getPosition().y + 5));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        circle->setPosition(sf::Vector2f(circle->getPosition().x - velocity, circle->getPosition().y));
+        circle->setPosition(sf::Vector2f(circle->getPosition().x - 5, circle->getPosition().y));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        circle->setPosition(sf::Vector2f(circle->getPosition().x + velocity, circle->getPosition().y));
+        circle->setPosition(sf::Vector2f(circle->getPosition().x + 5, circle->getPosition().y));
     }
     if (circle->getPosition().x <= 0) {
         circle->setPosition(sf::Vector2f(0, circle->getPosition().y));
@@ -34,27 +33,19 @@ void move(sf::Event event, sf::RenderWindow *window, sf::CircleShape *circle)
 int main(int argc, char **argv)
 {
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Simple Window");
-    sf::Sprite sprite_window;
-    sf::Texture texture_background;
-    texture_background.loadFromFile("map_final.png");
-    sprite_window.setTexture(texture_background);
-    sprite_window.setPosition(0, 0);
-    sprite_window.setScale(0.18,0.1757);
     sf::CircleShape shape(50.f);
-    shape.setFillColor(sf::Color(0, 0, 0));
+    shape.setFillColor(sf::Color(100, 250, 50));
     while (window.isOpen()) {
         sf::Event event;
-        window.clear(sf::Color::White);
         while (window.pollEvent(event))
         {
+            window.clear(sf::Color::White);
             if (event.type == sf::Event::Closed)
                 window.close();
             move(event, &window, &shape);
-            
+            window.draw(shape);
+            //window.display();
         }
-        //window.display();
-        window.draw(sprite_window);
-        window.draw(shape);
         window.display();
     }
     return 0;
