@@ -10,45 +10,63 @@
 
 void move(sf::Event event, sf::RenderWindow *window, sf::CircleShape *circle, sf::Vector2f *pos_cam)
 {
-    float velocity = 0.5;
-    //std::cout 
-    std::cout <<circle->getPosition().y<<'\n'<<std::endl;
+    int lim_camx = 1332;
+    float velocity = 0.4;
+    std::cout <<pos_cam->y<<'\n'<<std::endl;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         circle->setPosition(sf::Vector2f(circle->getPosition().x, circle->getPosition().y - velocity));
-        pos_cam->y -= velocity;
+        if (circle->getPosition().y < 1465) {
+            pos_cam->y -= velocity;
+        }
+
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
         circle->setPosition(sf::Vector2f(circle->getPosition().x, circle->getPosition().y + velocity));
-        pos_cam->y += velocity;
+        if (circle->getPosition().y > 100) {
+            pos_cam->y += velocity;
+        }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         circle->setPosition(sf::Vector2f(circle->getPosition().x - velocity, circle->getPosition().y));
-        pos_cam->x -= velocity;
+        if (circle->getPosition().x < 1432) {
+            pos_cam->x -= velocity;
+        }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         circle->setPosition(sf::Vector2f(circle->getPosition().x + velocity, circle->getPosition().y));
-        pos_cam->x += velocity;
-    
-        
+        if (circle->getPosition().x > 100) {
+            pos_cam->x += velocity;
+        }
     }
 
-    if (pos_cam->x > 480) {
-        pos_cam->x = 480;
+    if (pos_cam->x > lim_camx) {
+        pos_cam->x = lim_camx;
     }
     if (pos_cam->x < 0) {
         pos_cam->x = 0;
     }
+    if (pos_cam->y < 0) {
+        pos_cam->y = 0;
+    }
+    if (pos_cam->y > 1364) {
+        pos_cam->y = 1364;
+    }
+
+    //if (circle->getPosition().x > 40) {
+    //    pos_cam->x += velocity;
+    //}
+
     if (circle->getPosition().x <= 0) {
         circle->setPosition(sf::Vector2f(0, circle->getPosition().y));
     }
+    if (circle->getPosition().x >= 1532) {
+        circle->setPosition(sf::Vector2f(1532, circle->getPosition().y));
+    }
     if (circle->getPosition().y <= 0) {
-        circle->setPosition(sf::Vector2f(circle->getPosition().x, 0));
+        circle->setPosition(sf::Vector2f(circle->getPosition().x,0));
     }
-    if (circle->getPosition().x >= 690) {
-        circle->setPosition(sf::Vector2f(690, circle->getPosition().y));
-    }
-    if (circle->getPosition().y >= 700) {
-        circle->setPosition(sf::Vector2f(circle->getPosition().x, 700));
+    if (circle->getPosition().y >= 1565) {
+        circle->setPosition(sf::Vector2f(circle->getPosition().x, 1565));
     }
 }
 
@@ -57,6 +75,7 @@ int main(int argc, char **argv)
     sf::RenderWindow window(sf::VideoMode(4010, 4066), "SFML Simple Window");
     sf::Sprite sprite_window;
     sf::Texture texture_background;
+
     texture_background.loadFromFile("src/sprite/Backgroud/map_final.png");
     sprite_window.setTexture(texture_background);
     sprite_window.setPosition(0, 0);
@@ -71,7 +90,6 @@ int main(int argc, char **argv)
     float view_h = 200;
     sf::Vector2f pos_cam (0,0);
     sf::CircleShape shape(10.f);
-    //sf::Vector2f pos_ca
     shape.setFillColor(sf::Color(0, 0, 0));
     while (window.isOpen()) {
         sf::Event event;
@@ -80,7 +98,6 @@ int main(int argc, char **argv)
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-            
         }
         move(event, &window, &shape, &pos_cam);
         sf::View view1(sf::FloatRect(0, 0, view_w, view_h));
