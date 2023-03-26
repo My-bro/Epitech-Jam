@@ -7,8 +7,11 @@
 
 #include <SFML/Graphics.hpp>
 #include "../../../Include/node_portal.h"
+#include <random>
 
 int const nombre_de_paire = 3;
+int const lim_sprite_x = 1532;
+int const lim_sprite_y = 1565;
 
 void link_node(node_info_t **head, node_info_t **tail, node_info_t **node)
 {
@@ -19,6 +22,14 @@ void link_node(node_info_t **head, node_info_t **tail, node_info_t **node)
         (*tail)->next = *node;
         *tail = *node;
     }
+}
+
+int randomInt(int min, int max)
+{
+    std::random_device randomDevice;
+    std::mt19937 generator(randomDevice());
+    std::uniform_int_distribution<int> distribution(min, max);
+    return distribution(generator);
 }
 
 
@@ -33,8 +44,8 @@ node_info_t *init_portal_sprite(sf::Texture *texture_vortex, sf::Sprite *portal_
         node->sprite_portal_b.setTexture(*texture_vortex);
         node->sprite_portal_a.setScale(0.1,0.1);
         node->sprite_portal_b.setScale(0.1,0.1);
-        node->sprite_portal_a.setPosition(i * 10 ,i * 10);
-        node->sprite_portal_b.setPosition(i * 20 ,i * 20 );
+        node->sprite_portal_a.setPosition(randomInt(0, lim_sprite_x ),randomInt(0, lim_sprite_y));
+        node->sprite_portal_b.setPosition(randomInt(0, lim_sprite_x),randomInt(0, lim_sprite_y));
         link_node(&head, &tail, &node);
         node = node->next;
     }

@@ -10,12 +10,15 @@
 #include <SFML/Audio.hpp>
 #include "Include/node_portal.h"
 
+
 void init_music( sf::Music *music);
 void init_window_sprite(sf::RenderWindow *window, sf::Sprite *sprite_window, sf::Texture *texture_background);
 node_info_t *init_portal_sprite(sf::Texture *texture_vortex, sf::Sprite *portal_sprite , std::vector<sf::IntRect> *animationFrames);
 sf::Vector2f *move(sf::Event event, sf::RenderWindow *window, sf::CircleShape *circle, sf::Vector2f *pos_cam);
 void case_cam(sf::RenderWindow *window, sf::View *view1,  sf::Vector2f pos_cam);
 void handle_frame_portal( sf::Sprite *portal_sprite, std::vector<sf::IntRect> animationFrames,  float *frameDuration, float *elapsedTime, int *currentFrame);
+
+
 
 int aff_diamonds(sf::RenderWindow *window, float *x, float *y, sf::CircleShape *shape, int *diamondCount, int *j, char *state)
 {
