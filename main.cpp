@@ -12,9 +12,35 @@
 void init_music( sf::Music *music);
 void init_window_sprite(sf::RenderWindow *window, sf::Sprite *sprite_window, sf::Texture *texture_background);
 void init_portal_sprite(sf::Texture *texture_vortex, sf::Sprite *portal_sprite , std::vector<sf::IntRect> *animationFrames);
-void move(sf::Event event, sf::RenderWindow *window, sf::CircleShape *circle, sf::Vector2f *pos_cam);
+sf::Vector2f *move(sf::Event event, sf::RenderWindow *window, sf::CircleShape *circle, sf::Vector2f *pos_cam);
 void case_cam(sf::RenderWindow *window, sf::View *view1,  sf::Vector2f pos_cam);
 void handle_frame_portal( sf::Sprite *portal_sprite, std::vector<sf::IntRect> animationFrames,  float *frameDuration, float *elapsedTime, int *currentFrame);
+
+int aff_diamonds(sf::RenderWindow *window, float *x, float *y, sf::CircleShape *shape, int *diamondCount, int *j, char *state)
+{
+    std::srand(std::time(nullptr));
+    sf::Texture diamondTexture;
+    diamondTexture.loadFromFile("diamond blue.png");
+    sf::Sprite diamondSprite(diamondTexture);
+    diamondSprite.setOrigin(diamondSprite.getGlobalBounds().width / 2, diamondSprite.getGlobalBounds().height / 2);
+    std::rand();
+    for (int i = 0; i < 10; i++)
+    {
+        diamondSprite.setPosition(x[i], y[i]);
+        diamondSprite.setScale(0.005, 0.005);
+        if (shape->getGlobalBounds().intersects(diamondSprite.getGlobalBounds()) && i != *j)
+        {
+            *diamondCount = *diamondCount + 1;
+            *j = i;
+            state[i] == 'N';
+        }
+        if (state[i] != 'N') {
+            window->draw(diamondSprite);
+        }
+    }
+    return 0;
+}
+
 
 int main(int argc, char **argv)
 {
@@ -51,6 +77,17 @@ int main(int argc, char **argv)
     float countdownDuration = 180.f; // 3 minutes in seconds
     float elapsedTimeAccumulated = 0.f;
     float remainingTime;
+
+    int diamondCount = 0;
+    float x[10];
+    float y[10];
+    char state[10];
+    for (int i = 0; i < 10; i++)
+    {
+        x[i] = static_cast<float>(std::rand() % 600);
+        y[i] = static_cast<float>(std::rand() % 600);
+    }
+    int k = -1;
     
     while (window.isOpen()) {
         window.clear(sf::Color::White);
@@ -67,7 +104,7 @@ int main(int argc, char **argv)
                 window.close();
             }
         }
-        move(event, &window, &shape, &pos_cam);
+        sf::Vector2f *position = move(event, &window, &shape, &pos_cam);
         case_cam(&window, &view1, pos_cam);
         handle_frame_portal(&portal_sprite, animationFrames, &frameDuration, &elapsedTime, &currentFrame);
         window.draw(sprite_window);
@@ -77,6 +114,16 @@ int main(int argc, char **argv)
         timerText.setString(std::to_string(remainingMinutes) + ":" + (remainingSeconds < 10 ? "0" : "") + std::to_string(remainingSeconds));
         // Draw the timer text
         window.draw(timerText);
+        aff_diamonds(&window, x, y, &shape, &diamondCount, &k, state);
+        sf::Font font;
+        font.loadFromFile("src/font/font.ttf");
+        sf::Text text;
+        text.setFont(font);
+        text.setCharacterSize(24);
+        text.setString("Diamonds collected: " + std::to_string(diamondCount));
+        text.setPosition(10.0f + position->x, 10.0f + position->y);
+        text.setScale(0.5, 0.5);
+        window.draw(text);
         window.display();
     }
     return 0;

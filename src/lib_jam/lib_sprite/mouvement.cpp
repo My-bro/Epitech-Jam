@@ -13,7 +13,7 @@ int const lim_cam_x = 1332;
 int const lim_cam_y = 1364;
 int const lim_sprite_x = 1532;
 int const lim_sprite_y = 1565;
-float const velocity = 0.1;
+float const velocity = 5;
 int mid = 200;
 
 void check_direction(sf::Event event, sf::RenderWindow *window, sf::CircleShape *circle, sf::Vector2f *pos_cam)
@@ -76,9 +76,10 @@ void check_overflow_shape(sf::RenderWindow *window, sf::CircleShape *circle)
     }
 }
 
-void move(sf::Event event, sf::RenderWindow *window, sf::CircleShape *circle, sf::Vector2f *pos_cam)
+sf::Vector2f *move(sf::Event event, sf::RenderWindow *window, sf::CircleShape *circle, sf::Vector2f *pos_cam)
 {
     check_direction(event,window,circle,pos_cam);
     check_overflow_cam(pos_cam);
     check_overflow_shape(window, circle);
+    return pos_cam;
 }
