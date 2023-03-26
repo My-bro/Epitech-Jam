@@ -3,7 +3,13 @@
 ## File description:
 ## Makefile
 
-SRC = main.cpp
+SRC = 	src/lib_jam/lib_sprite/mouvement.cpp\
+		src/lib_jam/lib_sprite/init_window_sprite.cpp\
+		src/lib_jam/lib_sprite/init_portal_sprite.cpp\
+		src/lib_jam/lib_sprite/case_came.cpp\
+		src/lib_jam/lib_sprite/handle_frame_portal.cpp\
+		src/lib_jam/lib_music/init_music.cpp\
+		main.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -11,12 +17,13 @@ NAME = prog
 
 CXX = g++
 
-CXXFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+##CXXFLAGS =  -Wall -Wextra -Werror
+LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) $(OBJ) $(CXXFLAGS) -o $(NAME)
+	$(CXX) $(OBJ) $(LDFLAGS) -o $(NAME)
 
 clean:
 	rm -f $(OBJ) *~
