@@ -11,7 +11,7 @@
 void init_music( sf::Music *music)
 {
     music->openFromFile("src/musique/musique.ogg");
-    music->play();
+    //music->play();
     music->setVolume(50);
     music->setLoop(true);
 }

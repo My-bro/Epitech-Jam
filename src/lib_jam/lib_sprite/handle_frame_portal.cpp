@@ -12,7 +12,7 @@ void handle_frame_portal( sf::Sprite *portal_sprite, std::vector<sf::IntRect> an
     *frameDuration -= *elapsedTime;
     if (*frameDuration <= 0) {
         *currentFrame = (*currentFrame + 1) % 4;
-        portal_sprite->setTextureRect(animationFrames[*currentFrame]);
+        //portal_sprite->setTextureRect(animationFrames[*currentFrame]);
         *frameDuration = 0.2f;
     }
 }
